@@ -137,6 +137,12 @@ bool create;
 CImage Logo;
 CImage rove;
 
+//title 씬에서 사용하는 변수
+bool title_keydown;
+int title_blink;
+bool title_menuSelect;
+bool title_choice;
+
 int timeElasped()
 {
 	return (tick - otick) / 10;
@@ -154,6 +160,10 @@ void createScene()
 		case 1:
 			Logo.Destroy();
 			tick = 0; otick = 0;
+			title_keydown = false;
+			title_blink = 0;
+			title_menuSelect = false;
+			title_choice = false;
 			break;
 		}
 		create = true;
@@ -200,12 +210,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		HDC memDC = CreateCompatibleDC(totalDC);
 		HBITMAP hBitmap = CreateCompatibleBitmap(totalDC,600,600);
 		SelectObject(memDC, (HBITMAP)hBitmap);
-		HDC alphaDC = CreateCompatibleDC(totalDC);
-		HBITMAP alphaBitmap = CreateCompatibleBitmap(totalDC, 600, 600);
-		SelectObject(alphaDC, (HBITMAP)alphaBitmap);
 		
 		Rectangle(memDC, -10, 0, 600, 600);
-		Rectangle(alphaDC, -10, -10, 600, 600);
 
 		//HBITMAP 
 		switch (Scene)
@@ -213,18 +219,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case 0: // splash
 			createScene();
 			if (timeElasped() > 7 && timeElasped() < 15)
-				Logo.AlphaBlend(memDC, clientRECT.right / 2 - Logo.GetWidth() / 2, clientRECT.bottom / 2 - Logo.GetHeight() / 2, (tick-70) * 3);
+				Logo.AlphaBlend(memDC, clientRECT.right / 2 - Logo.GetWidth() / 2, clientRECT.bottom / 2 - Logo.GetHeight() / 2, (tick - 70) * 3);
 			if (timeElasped() >= 15 && timeElasped() < 25)
-				Logo.Draw(memDC, clientRECT.right/2 - Logo.GetWidth() / 2, clientRECT.bottom / 2 - Logo.GetHeight() / 2);
+				Logo.Draw(memDC, clientRECT.right / 2 - Logo.GetWidth() / 2, clientRECT.bottom / 2 - Logo.GetHeight() / 2);
 			if (timeElasped() >= 25 && timeElasped() < 33)
 				Logo.AlphaBlend(memDC, clientRECT.right / 2 - Logo.GetWidth() / 2, clientRECT.bottom / 2 - Logo.GetHeight() / 2, 255 - (tick - 250) * 3);
 
 			if (timeElasped() >= 40 && timeElasped() < 48)
-				rove.AlphaBlend(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2,(tick-400) * 3);
+				rove.AlphaBlend(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2, (tick - 400) * 3);
 
 			else if (timeElasped() >= 48)
 			{
-				rove.Draw(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2-(timeElasped()-48)*4);
+				rove.Draw(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - (timeElasped() - 48) * 4);
 
 				if (timeElasped() > 55)
 				{
@@ -232,21 +238,58 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					create = false;
 				}
 			}
-			
+
 			break;
 		case 1: // title
 			createScene();
-			
-			if ((tick - otick) * 20 < 255)
+
+			if (title_menuSelect)
 			{
-				rove.AlphaBlend(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32, (tick - otick) * 20);
+				TextOut(memDC, clientRECT.right/2 - 80 , clientRECT.bottom/2 - 60, L"처 음 부 터  시 작 하 기", lstrlen(L"처 음 부 터  시 작 하 기"));
+				TextOut(memDC, clientRECT.right / 2 - 40, clientRECT.bottom / 2 +40, L"계 속 하 기", lstrlen(L"계 속 하 기"));
+
+				if (title_choice)
+				{
+					TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 + 40, L">", lstrlen(L">"));
+				}
+				else
+				{
+					TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 - 60, L">", lstrlen(L">"));
+				}
 			}
-			else //처음 들어올 때 효과음
+			else
 			{
-				rove.Draw(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32);
-				if ((timeElasped()/3)%2 == 1)
-				TextOut(memDC, 210, 500, L"P r e s s   k e y   t o   S t a r t", lstrlen(L"P r e s s   k e y   t o   S t a r t"));
+				if ((tick - otick) * 20 < 255 && title_keydown == false)
+				{
+					rove.AlphaBlend(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32, (tick - otick) * 20);
+				}
+				else if (title_keydown == false) //처음 들어올 때 효과음
+				{
+					rove.Draw(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32);
+					if ((timeElasped() / 3) % 2 == 1)
+						TextOut(memDC, 200, 500, L"P r e s s   E n t e r   t o   S t a r t", lstrlen(L"P r e s s   E n t e r   t o   S t a r t"));
+				}
+				else if (title_blink < 10)
+				{
+					rove.Draw(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32);
+					if (((tick - otick)) % 2 == 1)
+						TextOut(memDC, 200, 500, L"P r e s s   E n t e r   t o   S t a r t", lstrlen(L"P r e s s   E n t e r   t o   S t a r t"));
+					title_blink++;
+					if (title_blink >= 10)
+						tick = 0; otick = 0;
+				}
+				else if ((tick - otick) * 20 < 255)
+				{
+					rove.AlphaBlend(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32, 255 - ((tick - otick) * 20));
+				}
+				else
+				{
+					if (timeElasped() > 3)
+						title_menuSelect = true;
+				}
 			}
+			break;
+		case 2: // ingame?
 			break;
 		}
 		
@@ -281,7 +324,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				Scene = 1;
 				create = false;
 				break;
+			case 1:
+				title_keydown = true;
+				break;
 			}
+			break;
+		case VK_UP:
+			switch (Scene)
+			{
+			case 1:
+				if (title_menuSelect)
+				{
+					if (title_choice)
+						title_choice = false;
+					else
+						title_choice = true;
+				}
+				break;
+			}
+			break;
+		case VK_DOWN:
+			switch (Scene)
+			{
+			case 1:
+				if (title_menuSelect)
+				{
+					if (title_choice)
+						title_choice = false;
+					else
+						title_choice = true;
+				}
+				break;
+			}
+			break;
 		}
 		break;
     case WM_DESTROY:
