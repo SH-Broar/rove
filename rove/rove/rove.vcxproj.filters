@@ -30,12 +30,24 @@
     <ClInclude Include="rove.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerDataClass.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="rove.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDataClass.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

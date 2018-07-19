@@ -16,7 +16,17 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+#include <time.h>
+#include <atlimage.h>
 
+//
+                                // 현재 인스턴스입니다.
+
+#define TOTAL_ENDING_NUMBER 30
+enum SceneNumber{SN_splash,SN_title,SN_opening,SN_diary};
+
+
+//
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
 #ifdef _DEBUG

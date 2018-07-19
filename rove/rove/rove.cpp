@@ -3,13 +3,14 @@
 
 #include "stdafx.h"
 #include "rove.h"
-#include <time.h>
-#include <atlimage.h>
+#include "PlayerDataClass.h"
+#include "SceneManager.h"
 
+HINSTANCE hInst;
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
-HINSTANCE hInst;                                // 현재 인스턴스입니다.
+
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
@@ -127,47 +128,21 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 
 // 전역으로 사용하는 변수
-int Scene;
-int tick; int otick;
-bool stop;
-RECT clientRECT;
-bool create;
+
+
+SceneManager Game;
 
 //splash 씬에서 사용하는 변수
-CImage Logo;
-CImage rove;
+
 
 //title 씬에서 사용하는 변수
-bool title_keydown;
-int title_blink;
-bool title_menuSelect;
-bool title_choice;
 
-int timeElasped()
-{
-	return (tick - otick) / 10;
-}
+
+//opening 에서 사용하는 변수
 
 void createScene()
 {
-	if (create == false)
-	{
-		switch (Scene)
-		{
-		case 0:
-			stop = true;
-			break;
-		case 1:
-			Logo.Destroy();
-			tick = 0; otick = 0;
-			title_keydown = false;
-			title_blink = 0;
-			title_menuSelect = false;
-			title_choice = false;
-			break;
-		}
-		create = true;
-	}
+	Game.CreateScene();
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -194,14 +169,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 	case WM_CREATE:
-		Logo.LoadFromResource(hInst, IDC_LOGO);
-		rove.LoadFromResource(hInst, IDB_TITLE);
-		GetClientRect(hWnd, &clientRECT);
-		Scene = 0;
-		tick = 0; otick = 0;
-		stop = false;
-		create = false;
+		Game.Oncreate(hInst);
+		Game.GetClient(hWnd);
+		Game.ChangeScene(SN_splash);
 		SetTimer(hWnd, 1, 10, NULL);
+		SetTimer(hWnd, 99, 1000, NULL); //Debug
 		break;
     case WM_PAINT:
         {
@@ -214,150 +186,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		Rectangle(memDC, -10, 0, 600, 600);
 
 		//HBITMAP 
-		switch (Scene)
-		{
-		case 0: // splash
-			createScene();
-			if (timeElasped() > 7 && timeElasped() < 15)
-				Logo.AlphaBlend(memDC, clientRECT.right / 2 - Logo.GetWidth() / 2, clientRECT.bottom / 2 - Logo.GetHeight() / 2, (tick - 70) * 3);
-			if (timeElasped() >= 15 && timeElasped() < 25)
-				Logo.Draw(memDC, clientRECT.right / 2 - Logo.GetWidth() / 2, clientRECT.bottom / 2 - Logo.GetHeight() / 2);
-			if (timeElasped() >= 25 && timeElasped() < 33)
-				Logo.AlphaBlend(memDC, clientRECT.right / 2 - Logo.GetWidth() / 2, clientRECT.bottom / 2 - Logo.GetHeight() / 2, 255 - (tick - 250) * 3);
-
-			if (timeElasped() >= 40 && timeElasped() < 48)
-				rove.AlphaBlend(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2, (tick - 400) * 3);
-
-			else if (timeElasped() >= 48)
-			{
-				rove.Draw(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - (timeElasped() - 48) * 4);
-
-				if (timeElasped() > 55)
-				{
-					Scene = 1;
-					create = false;
-				}
-			}
-
-			break;
-		case 1: // title
-			createScene();
-
-			if (title_menuSelect)
-			{
-				TextOut(memDC, clientRECT.right/2 - 80 , clientRECT.bottom/2 - 60, L"처 음 부 터  시 작 하 기", lstrlen(L"처 음 부 터  시 작 하 기"));
-				TextOut(memDC, clientRECT.right / 2 - 40, clientRECT.bottom / 2 +40, L"계 속 하 기", lstrlen(L"계 속 하 기"));
-
-				if (title_choice)
-				{
-					TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 + 40, L">", lstrlen(L">"));
-				}
-				else
-				{
-					TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 - 60, L">", lstrlen(L">"));
-				}
-			}
-			else
-			{
-				if ((tick - otick) * 20 < 255 && title_keydown == false)
-				{
-					rove.AlphaBlend(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32, (tick - otick) * 20);
-				}
-				else if (title_keydown == false) //처음 들어올 때 효과음
-				{
-					rove.Draw(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32);
-					if ((timeElasped() / 3) % 2 == 1)
-						TextOut(memDC, 200, 500, L"P r e s s   E n t e r   t o   S t a r t", lstrlen(L"P r e s s   E n t e r   t o   S t a r t"));
-				}
-				else if (title_blink < 10)
-				{
-					rove.Draw(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32);
-					if (((tick - otick)) % 2 == 1)
-						TextOut(memDC, 200, 500, L"P r e s s   E n t e r   t o   S t a r t", lstrlen(L"P r e s s   E n t e r   t o   S t a r t"));
-					title_blink++;
-					if (title_blink >= 10)
-						tick = 0; otick = 0;
-				}
-				else if ((tick - otick) * 20 < 255)
-				{
-					rove.AlphaBlend(memDC, clientRECT.right / 2 - rove.GetWidth() / 2, clientRECT.bottom / 2 - rove.GetHeight() / 2 - 32, 255 - ((tick - otick) * 20));
-				}
-				else
-				{
-					if (timeElasped() > 3)
-						title_menuSelect = true;
-				}
-			}
-			break;
-		case 2: // ingame?
-			break;
-		}
+		Game.SceneDispatch(memDC);
 		
 		BitBlt(totalDC, 0, 0, 600, 600, memDC, 0, 0, SRCCOPY);
 		EndPaint(hWnd, &ps);
         }
         break;
 	case WM_TIMER:
-		if (wParam == 1) //Time Master
+		Game.Timer(wParam);
+		if (wParam == 1)
 		{
-			if (stop == true)
-				tick++;
-			if (stop == false)	// 전역 bool변수 stop을 true로 바꾸면 체크 시작
-				otick = tick;
-
-			if (tick >= INT_MAX - 1)
-			{
-				otick = -(tick - otick);
-				tick = 0;
-			}
-			
 			InvalidateRect(hWnd, NULL, false);
 		}
 		break;
 	case WM_KEYDOWN:
-		switch (wParam)
-		{
-		case VK_RETURN:
-			switch (Scene)
-			{
-			case 0:
-				Scene = 1;
-				create = false;
-				break;
-			case 1:
-				title_keydown = true;
-				break;
-			}
-			break;
-		case VK_UP:
-			switch (Scene)
-			{
-			case 1:
-				if (title_menuSelect)
-				{
-					if (title_choice)
-						title_choice = false;
-					else
-						title_choice = true;
-				}
-				break;
-			}
-			break;
-		case VK_DOWN:
-			switch (Scene)
-			{
-			case 1:
-				if (title_menuSelect)
-				{
-					if (title_choice)
-						title_choice = false;
-					else
-						title_choice = true;
-				}
-				break;
-			}
-			break;
-		}
+		Game.KeyManager(wParam);
 		break;
     case WM_DESTROY:
         PostQuitMessage(0);
