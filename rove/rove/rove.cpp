@@ -190,17 +190,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		
 		BitBlt(totalDC, 0, 0, 600, 600, memDC, 0, 0, SRCCOPY);
 		EndPaint(hWnd, &ps);
+		DeleteDC(memDC);
+		DeleteObject(hBitmap);
         }
         break;
 	case WM_TIMER:
 		Game.Timer(wParam);
 		if (wParam == 1)
-		{
 			InvalidateRect(hWnd, NULL, false);
-		}
 		break;
 	case WM_KEYDOWN:
 		Game.KeyManager(wParam);
+		break;
+	case WM_LBUTTONDOWN:
+		Game.mouseXY(lParam);
+		Game.KeyManager(VK_RETURN);
 		break;
     case WM_DESTROY:
         PostQuitMessage(0);

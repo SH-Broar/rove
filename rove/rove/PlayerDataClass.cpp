@@ -5,9 +5,6 @@ PlayerDataClass::PlayerDataClass()
 {
 	NowScene		= SN_splash;
 
-	for (int i = 0; i < 30; i++)
-		ending[i] = false;
-
 	this->stat.passion			= 0;
 	this->stat.endurence		= 0;
 	this->stat.intelligent		= 0;

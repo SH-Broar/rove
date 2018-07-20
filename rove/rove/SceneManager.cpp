@@ -12,45 +12,158 @@ void SceneManager::Oncreate(HINSTANCE hInst)
 	stop = false;
 	Logo.LoadFromResource(hInst, IDC_LOGO);
 	rove.LoadFromResource(hInst, IDB_TITLE);
-	
+	for (int i = 0; i < 30; i++)
+		ending[i] = false;
 }
-
 void SceneManager::GetClient(HWND hWnd)
 {
 	GetClientRect(hWnd, &clientRECT);
 }
-
 SceneManager::~SceneManager()
 {
 
 }
-
 int SceneManager::timeElasped()
 {
 	return (tick - otick) / 10;
 }
-
+void SceneManager::mouseXY(LPARAM lParam)
+{
+	MouseX = LOWORD(lParam);
+	MouseY = HIWORD(lParam);
+}
 void SceneManager::CreateScene()
 {
 	switch (player.NowScene)
 	{
-		case SN_splash:
-			stop = true;
-			break;
-		case SN_title:
-			Logo.Destroy();
-			tick = 0; otick = 0;
-			title_keydown = false;
-			title_blink = 0;
-			title_menuSelect = false;
-			title_choice = false;
-			title_textOn = false;
-			break;
-		case SN_opening:
-			break;
-		case SN_diary:
-			tick = 0; otick = 0;
-			break;
+	case SN_splash:
+		stop = true;
+		break;
+	case SN_title:
+		Logo.Destroy();
+		tick = 0; otick = 0;
+		title_keydown = false;
+		title_blink = 0;
+		title_menuSelect = false;
+		title_choice = false;
+		title_textOn = false;
+		break;
+	case SN_opening:
+		break;
+	case SN_diary:
+	{
+		tick = 0; otick = 0;
+		cursorPos = 0; cursorLine = 0;
+		d_saveFile.open("Save\\Diary");
+		std::string tmp;
+		for (int i = 0; i < 30; i++)
+		{
+			Inbuff = "";
+			tmp = "";
+			while (d_saveFile >> tmp)
+			{
+				if (tmp == ".")
+					break;
+				else
+					Inbuff = Inbuff + tmp;
+			}
+			switch (i + 1)
+			{
+			case 1:
+				if (Inbuff.compare("ThisisfinalcurtaincallbeforetheFINALE") == 0) ending[i] = true;
+				break;
+			case 2:
+				if (Inbuff.compare("test") == 0) ending[i] = true;
+				break;
+			case 3:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 4:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 5:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 6:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 7:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 8:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 9:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 10:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 11:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 12:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 13:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 14:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 15:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 16:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 17:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 18:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 19:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 20:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 21:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 22:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 23:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 24:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 25:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 26:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 27:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 28:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 29:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			case 30:
+				if (Inbuff.compare("") == 0) ending[i] = true;
+				break;
+			}
+		}
+		d_saveFile.close();
+	}
+	break;
 	}
 }
 
@@ -84,34 +197,69 @@ void SceneManager::Timer(WPARAM wParam)
 		printf("CurrentScene : %d\n", player.NowScene);
 		printf("tick : %d , otick : %d\n\n", tick, otick);
 		printf("pas %d end %d int %d ext %d / ind %d nai %d opt %d res %d\n", player.stat.passion, player.stat.endurence, player.stat.intelligent, player.stat.extroverted, player.stat.independent, player.stat.naive, player.stat.optimism, player.stat.resistance);
+		printf("\n");
+		if (player.NowScene == SN_diary)
+		{
+			printf("¡äsave sentences\n");
+			d_saveFile.open("Save\\Diary");
+			std::string tmp;
+			for (int i = 0; i < 30; i++)
+			{
+				Inbuff = "";
+				tmp = "";
+				while (d_saveFile >> tmp)
+				{
+					if (tmp == ".")
+						break;
+					else
+						Inbuff = Inbuff + tmp;
+				}
+
+				if (i % 2 == 1)
+					std::cout << Inbuff << std::endl;
+				else
+					std::cout << Inbuff << "  ";
+
+			}
+			d_saveFile.close();
+		}
 	}
 }
 
 void SceneManager::KeyManager(WPARAM wParam)
 {
-	switch (wParam)
+	switch (player.NowScene)
 	{
-	case VK_RETURN:
-		switch (player.NowScene)
+	case SN_splash:
+	{
+		switch (wParam)
 		{
-		case SN_splash:
+		case VK_RETURN:
 			ChangeScene(SN_title);
 			break;
-		case SN_title:
+		}
+	}
+	break;
+	case SN_title:
+	{
+		switch (wParam)
+		{
+		case VK_RETURN:
 			if (title_menuSelect)
 			{
 				switch (title_choice)
 				{
 				case 0:
-					player.PlayerLoadFromFile();
+					ChangeScene(SN_opening);
+					rove.Destroy();
 					break;
 				case 1:
-					ChangeScene(SN_opening);
+					player.PlayerLoadFromFile();
+					rove.Destroy();
 					break;
 				case 2:
 					ChangeScene(SN_diary);
 					break;
-
 				}
 
 			}
@@ -119,12 +267,7 @@ void SceneManager::KeyManager(WPARAM wParam)
 				title_keydown = true;
 
 			break;
-		}
-		break;
-	case VK_UP:
-		switch (player.NowScene)
-		{
-		case SN_title:
+		case VK_UP:
 			if (title_menuSelect)
 			{
 				if (title_textOn)
@@ -149,12 +292,7 @@ void SceneManager::KeyManager(WPARAM wParam)
 
 			}
 			break;
-		}
-		break;
-	case VK_DOWN:
-		switch (player.NowScene)
-		{
-		case SN_title:
+		case VK_DOWN:
 			if (title_menuSelect)
 			{
 				if (title_textOn)
@@ -177,9 +315,70 @@ void SceneManager::KeyManager(WPARAM wParam)
 					}
 				}
 			}
+		}
+	}
+	break;
+
+	case SN_diary:
+	{
+		switch (wParam)
+		{
+		case VK_RETURN:
+			ChangeScene(SN_title);
+			break;
+		case VK_UP:
+			if (cursorPos == 0)
+			{
+				if (cursorLine == 0)
+				{
+
+				}
+				else
+				{
+					cursorPos = 4;
+					cursorLine--;
+				}
+			}
+			else
+			{
+				cursorPos--;
+			}
+			break;
+		case VK_DOWN:
+			if (cursorPos == 4)
+			{
+				if (cursorLine == 5)
+				{
+
+				}
+				else
+				{
+					cursorPos = 0;
+					cursorLine++;
+				}
+			}
+			else
+			{
+				cursorPos++;
+			}
+			break;
+		case VK_LEFT:
+			if (cursorLine > 0)
+				cursorLine--;
+			break;
+		case VK_RIGHT:
+			if (cursorLine < 5)
+				cursorLine++;
 			break;
 		}
-		break;
+
+	}
+	break;
+	case SN_opening:
+	{
+
+	}
+	break;
 	}
 }
 
@@ -294,7 +493,6 @@ void SceneManager::title(HDC& memDC)
 			{
 				title_menuSelect = true;
 				title_blink = 0;
-				rove.Destroy();
 			}
 		}
 	}
@@ -302,6 +500,44 @@ void SceneManager::title(HDC& memDC)
 
 void SceneManager::diary(HDC& memDC)
 {
+	MoveToEx(memDC, 0, 100, NULL);
+	LineTo(memDC, clientRECT.right, 100);
+	MoveToEx(memDC, clientRECT.right / 2 - 155, 0, NULL);
+	LineTo(memDC, clientRECT.right / 2 - 155, 100);
+
+	if (ending[cursorPos + (cursorLine / 2) * 10])
+	{
+		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 285, 10, cursorPos + (cursorLine / 2) * 10 + 1);
+		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 150, 10, 25+(cursorPos + (cursorLine / 2) * 10 + 1)*6,3);
+	}
+	else
+	{
+		TextOut(memDC, clientRECT.right / 2 - 285, 10, L"? ? ? ? ?", lstrlen(L"? ? ? ? ?"));
+		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 150, 10, 25 + (cursorPos + (cursorLine / 2) * 10 + 1) * 6 + 4);
+	}
+
+	for (int i = 0; i < 5; i++) // left
+	{
+		if (ending[i + (cursorLine / 2) * 10])
+			fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 220, 200 + 70 * i, i + (cursorLine / 2) * 10 + 1);
+		else
+			TextOut(memDC, clientRECT.right / 2 - 220, 200 + 70 * i, L"? ? ? ? ?", lstrlen(L"? ? ? ? ?"));
+	}
+	for (int i = 0; i < 5; i++) // right
+	{
+		if (ending[5 + i + (cursorLine / 2) * 10])
+			fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 + 50, 200 + 70 * i, 5 + i + (cursorLine / 2) * 10);
+		else
+			TextOut(memDC, clientRECT.right / 2 + 50, 200 + 70 * i, L"? ? ? ? ?", lstrlen(L"? ? ? ? ?"));
+	}
+	if (cursorLine % 2)
+		TextOut(memDC, clientRECT.right / 2 + 40, 200 + 70 * cursorPos, L">", lstrlen(L">"));
+	else
+		TextOut(memDC, clientRECT.right / 2 - 230, 200 + 70 * cursorPos, L">", lstrlen(L">"));
+
+	WCHAR page[6];
+	wsprintf(page, L"%d / 3", cursorLine / 2 + 1);
+	TextOut(memDC, clientRECT.right / 2 - 20, clientRECT.bottom - 30, page, lstrlen(page));
 }
 
 void SceneManager::opening(HDC& memDC)

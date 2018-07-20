@@ -18,6 +18,9 @@
 #include <tchar.h>
 #include <time.h>
 #include <atlimage.h>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 //
                                 // 현재 인스턴스입니다.

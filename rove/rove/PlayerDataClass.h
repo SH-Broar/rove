@@ -26,7 +26,6 @@ private:
 	
 public:
 	int NowScene;
-	bool ending[30];
 	PlayerState stat;
 
 	PlayerDataClass();
