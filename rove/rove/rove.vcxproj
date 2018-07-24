@@ -135,6 +135,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="Data\Diary.txt" />
+    <Text Include="Data\opening.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

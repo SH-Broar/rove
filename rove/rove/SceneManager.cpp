@@ -38,6 +38,7 @@ void SceneManager::CreateScene()
 	{
 	case SN_splash:
 		stop = true;
+		tickn = 1;
 		break;
 	case SN_title:
 		Logo.Destroy();
@@ -49,6 +50,11 @@ void SceneManager::CreateScene()
 		title_textOn = false;
 		break;
 	case SN_opening:
+		tick = 0; otick = 0;
+		open_textNum = 0;
+		open_textPreTime;
+		open_storyNum = 0;
+		open_tutorial_choice = 0;
 		break;
 	case SN_diary:
 	{
@@ -79,85 +85,85 @@ void SceneManager::CreateScene()
 				if (Inbuff.compare("") == 0) ending[i] = true;
 				break;
 			case 4:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 5:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 6:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 7:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 8:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 9:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 10:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 11:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 12:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 13:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 14:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 15:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 16:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 17:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 18:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 19:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 20:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 21:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 22:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 23:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 24:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 25:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 26:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 27:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 28:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 29:
-				if (Inbuff.compare("") == 0) ending[i] = true;
-				break;
-			case 30:
-				if (Inbuff.compare("") == 0) ending[i] = true;
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 5:					
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 6:					
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 7:					
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 8:					
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 9:					
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 10:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 11:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 12:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 13:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 14:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 15:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 16:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 17:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 18:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 19:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 20:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 21:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 22:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 23:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 24:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 25:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 26:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 27:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 28:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 29:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
+				break;				
+			case 30:				
+				if (Inbuff.compare("5") == 0) ending[i] = true;
 				break;
 			}
 		}
@@ -177,19 +183,18 @@ void SceneManager::Timer(WPARAM wParam)
 {
 	if (wParam == 1) //Time Master
 	{
-
 		if (stop == true)
-			tick++;
+				tick++;
 		if (stop == false)	// 전역 bool변수 stop을 true로 바꾸면 체크 시작
 			otick = tick;
 
-		if (tick >= INT_MAX - 1)
+		/*if (tick >= INT_MAX - 1)
 		{
 			otick = -(tick - otick);
 			tick = 0;
-		}
+		}*/
 	}
-	if (wParam == 99)
+	if (wParam == 99) //Debug
 	{
 		system("cls");
 		printf("r o v e\n");
@@ -376,7 +381,41 @@ void SceneManager::KeyManager(WPARAM wParam)
 	break;
 	case SN_opening:
 	{
-
+		switch (wParam)
+		{
+		case VK_RETURN:
+			tick = tick + 41;
+			if (tick > 150 && open_storyNum == 0)
+			{
+				if (open_tutorial_choice)
+					//ChangeScene();
+					1;
+				else
+				{
+					open_storyNum = 1;
+					tick = 0; otick = 0;
+				}
+			}
+			break;
+		case VK_LEFT:
+			if (open_storyNum == 0)
+			{
+				if (open_tutorial_choice)
+					open_tutorial_choice = 0;
+				else
+					open_tutorial_choice = 1;
+			}
+			break;
+		case VK_RIGHT:
+			if (open_storyNum == 0)
+			{
+				if (open_tutorial_choice)
+					open_tutorial_choice = 0;
+				else
+					open_tutorial_choice = 1;
+			}
+			break;
+		}
 	}
 	break;
 	}
@@ -428,24 +467,38 @@ void SceneManager::title(HDC& memDC)
 {
 	if (title_menuSelect)
 	{
-		TextOut(memDC, clientRECT.right / 2 - 80, clientRECT.bottom / 2 - 60, L"처 음 부 터  시 작 하 기", lstrlen(L"처 음 부 터  시 작 하 기"));
-		TextOut(memDC, clientRECT.right / 2 - 40, clientRECT.bottom / 2 + 40, L"계 속 하 기", lstrlen(L"계 속 하 기"));
+		
 		if (title_blink > 5)
 		{
 			title_textOn = true;
-			TextOut(memDC, clientRECT.right / 2 - 56, clientRECT.bottom / 2 + 210, L"여 행 의  기 록", lstrlen(L"여 행 의  기 록"));
+			
 
 			if (title_choice == 0)
 			{
 				TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 - 60, L">", lstrlen(L">"));
+				SetTextColor(memDC, RGB(160, 160, 160));
+				TextOut(memDC, clientRECT.right / 2 - 40, clientRECT.bottom / 2 + 40, L"계 속 하 기", lstrlen(L"계 속 하 기"));
+				TextOut(memDC, clientRECT.right / 2 - 56, clientRECT.bottom / 2 + 210, L"여 행 의  기 록", lstrlen(L"여 행 의  기 록"));
+				SetTextColor(memDC, RGB(0, 0, 0));
+				TextOut(memDC, clientRECT.right / 2 - 80, clientRECT.bottom / 2 - 60, L"처 음 부 터  시 작 하 기", lstrlen(L"처 음 부 터  시 작 하 기"));
 			}
 			else if (title_choice == 1)
 			{
 				TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 + 40, L">", lstrlen(L">"));
+				SetTextColor(memDC, RGB(160, 160, 160));
+				TextOut(memDC, clientRECT.right / 2 - 80, clientRECT.bottom / 2 - 60, L"처 음 부 터  시 작 하 기", lstrlen(L"처 음 부 터  시 작 하 기"));
+				TextOut(memDC, clientRECT.right / 2 - 56, clientRECT.bottom / 2 + 210, L"여 행 의  기 록", lstrlen(L"여 행 의  기 록"));
+				SetTextColor(memDC, RGB(0, 0, 0));
+				TextOut(memDC, clientRECT.right / 2 - 40, clientRECT.bottom / 2 + 40, L"계 속 하 기", lstrlen(L"계 속 하 기"));
 			}
 			else
 			{
 				TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 + 210, L">", lstrlen(L">"));
+				SetTextColor(memDC, RGB(160, 160, 160));
+				TextOut(memDC, clientRECT.right / 2 - 80, clientRECT.bottom / 2 - 60, L"처 음 부 터  시 작 하 기", lstrlen(L"처 음 부 터  시 작 하 기"));
+				TextOut(memDC, clientRECT.right / 2 - 40, clientRECT.bottom / 2 + 40, L"계 속 하 기", lstrlen(L"계 속 하 기"));
+				SetTextColor(memDC, RGB(0, 0, 0));
+				TextOut(memDC, clientRECT.right / 2 - 56, clientRECT.bottom / 2 + 210, L"여 행 의  기 록", lstrlen(L"여 행 의  기 록"));
 			}
 		}
 		else
@@ -453,13 +506,21 @@ void SceneManager::title(HDC& memDC)
 			if (title_choice)
 			{
 				TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 + 40, L">", lstrlen(L">"));
+				SetTextColor(memDC, RGB(160, 160, 160));
+				TextOut(memDC, clientRECT.right / 2 - 80, clientRECT.bottom / 2 - 60, L"처 음 부 터  시 작 하 기", lstrlen(L"처 음 부 터  시 작 하 기"));
+				SetTextColor(memDC, RGB(0, 0, 0));
+				TextOut(memDC, clientRECT.right / 2 - 40, clientRECT.bottom / 2 + 40, L"계 속 하 기", lstrlen(L"계 속 하 기"));
 			}
 			else
 			{
 				TextOut(memDC, clientRECT.right / 2 - 110, clientRECT.bottom / 2 - 60, L">", lstrlen(L">"));
+				SetTextColor(memDC, RGB(160, 160, 160));
+				TextOut(memDC, clientRECT.right / 2 - 40, clientRECT.bottom / 2 + 40, L"계 속 하 기", lstrlen(L"계 속 하 기"));
+				SetTextColor(memDC, RGB(0, 0, 0));
+				TextOut(memDC, clientRECT.right / 2 - 80, clientRECT.bottom / 2 - 60, L"처 음 부 터  시 작 하 기", lstrlen(L"처 음 부 터  시 작 하 기"));
+				
 			}
 		}
-
 
 	}
 	else
@@ -502,18 +563,18 @@ void SceneManager::diary(HDC& memDC)
 {
 	MoveToEx(memDC, 0, 100, NULL);
 	LineTo(memDC, clientRECT.right, 100);
-	MoveToEx(memDC, clientRECT.right / 2 - 155, 0, NULL);
-	LineTo(memDC, clientRECT.right / 2 - 155, 100);
+	MoveToEx(memDC, clientRECT.right / 2 - 135, 0, NULL);
+	LineTo(memDC, clientRECT.right / 2 - 135, 100);
 
-	if (ending[cursorPos + (cursorLine / 2) * 10])
+	if (ending[cursorPos + cursorLine * 5])
 	{
-		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 285, 10, cursorPos + (cursorLine / 2) * 10 + 1);
-		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 150, 10, 25+(cursorPos + (cursorLine / 2) * 10 + 1)*6,3);
+		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 285, 10, cursorPos + cursorLine * 5 + 1);
+		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 130, 10, 25+(cursorPos + cursorLine * 5 + 1)*6,3);
 	}
 	else
 	{
 		TextOut(memDC, clientRECT.right / 2 - 285, 10, L"? ? ? ? ?", lstrlen(L"? ? ? ? ?"));
-		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 150, 10, 25 + (cursorPos + (cursorLine / 2) * 10 + 1) * 6 + 4);
+		fText(memDC, "Data\\Diary.txt", clientRECT.right / 2 - 130, 10, 25 + (cursorPos + cursorLine* 5 + 1) * 6 + 4);
 	}
 
 	for (int i = 0; i < 5; i++) // left
@@ -542,4 +603,28 @@ void SceneManager::diary(HDC& memDC)
 
 void SceneManager::opening(HDC& memDC)
 {
+	//스토리 텍스트
+	SetTextAlign(memDC, TA_CENTER);
+
+	switch (open_storyNum)
+	{
+	case 0:
+		xText(memDC, "튜토리얼을  건너뛰시겠습니까?", clientRECT.right / 2, clientRECT.bottom / 2 - 80, 50, tick, otick).Out();
+
+		xText(memDC, "예                      아니오", clientRECT.right / 2, clientRECT.bottom / 2 + 20, 90, tick, otick).Out();
+
+		if (open_tutorial_choice == 0)
+			xText(memDC,">", clientRECT.right / 2 + 20, clientRECT.bottom / 2 + 20, 130, tick,otick).Out();
+		else
+			xText(memDC, ">", clientRECT.right / 2 - 85, clientRECT.bottom / 2 + 20, 130, tick, otick).Out();
+		break;
+	case 1:
+		for (int i = 0; i<25; i++)
+			fxText(memDC, "Data\\opening.txt", clientRECT.right / 2, clientRECT.bottom / 2 - 80, 1 + i * 5, 5, 100 + i * 200, 200, tick, otick);
+		break;
+	}
+	
+	//랜덤 텍스트
+
+	//
 }

@@ -7,6 +7,8 @@
 
 typedef struct _PlayerState
 {
+	int HP;
+
 	// main 4 stat
 	int passion;			// -미온적 / +열성적
 	int endurence;			// -기분파 / +참을성 강함
@@ -27,6 +29,7 @@ private:
 public:
 	int NowScene;
 	PlayerState stat;
+	int town[12];
 
 	PlayerDataClass();
 	~PlayerDataClass();

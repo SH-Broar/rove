@@ -9,6 +9,7 @@ private:
 	//
 	PlayerDataClass player;
 	int tick; int otick;
+	int tickn;
 	int MouseX; int MouseY;
 	bool stop;
 	bool ending[30];
@@ -27,7 +28,11 @@ private:
 	std::string Inbuff;
 	int cursorPos;
 	int cursorLine;
-	//
+	//opening
+	int open_textPreTime[100];
+	int open_textNum;
+	int open_storyNum;
+	int open_tutorial_choice;
 public:
 	SceneManager();
 	void Oncreate(HINSTANCE hInst);

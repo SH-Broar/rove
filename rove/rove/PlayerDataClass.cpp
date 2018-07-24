@@ -3,7 +3,8 @@
 
 PlayerDataClass::PlayerDataClass()
 {
-	NowScene		= SN_splash;
+	this->stat.HP				= 100;
+	NowScene					= SN_splash;
 
 	this->stat.passion			= 0;
 	this->stat.endurence		= 0;
@@ -14,6 +15,7 @@ PlayerDataClass::PlayerDataClass()
 	this->stat.naive			= 0;
 	this->stat.optimism		    = 0;
 	this->stat.resistance		= 0;
+
 }
 
 
