@@ -33,6 +33,7 @@ private:
 	int open_textNum;
 	int open_storyNum;
 	int open_tutorial_choice;
+	POINT open_textXY[10];
 public:
 	SceneManager();
 	void Oncreate(HINSTANCE hInst);
