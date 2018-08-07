@@ -33,13 +33,13 @@ Lapsed fox 여우 신사
 
 계속 여기 있는건 어떻겠냐는 말에 단칼에 "싫다"라고 말하지 않으면 메인 4스탯 전부 +10.
 
----- 2layer
+---- 2layer 낮
 
 
----- 3layer
+---- 3layer 밤
 
 
----- 4layer
+---- 4layer 낮
 
 
----- 5layer
+---- 5layer ?

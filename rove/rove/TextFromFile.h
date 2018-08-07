@@ -9,6 +9,7 @@ class fxText {
 
 void fxText(HDC & memDC, std::string name, int cx, int cy, int Line, int startTime, int stdTime, int t, int ot);
 void fxText(HDC & memDC, std::string name, int cx, int cy, int Line, int dxLine, int startTime, int stdTime, int t, int ot);
+void fxText(HDC & memDC, std::string name, int cx, int cy, int Line, int dxLine, int startTime, int stdTime, int t, int ot, int flag);
 
 class xText
 {

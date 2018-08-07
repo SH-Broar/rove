@@ -606,6 +606,7 @@ void SceneManager::opening(HDC& memDC)
 	//스토리 텍스트
 	SetTextAlign(memDC, TA_CENTER);
 
+
 	switch (open_storyNum)
 	{
 	case 0:
@@ -618,9 +619,76 @@ void SceneManager::opening(HDC& memDC)
 		else
 			xText(memDC, ">", clientRECT.right / 2 - 85, clientRECT.bottom / 2 + 20, 130, tick, otick).Out();
 		break;
-	case 1:
-		for (int i = 0; i<25; i++)
-			fxText(memDC, "Data\\opening.txt", clientRECT.right / 2, clientRECT.bottom / 2 - 80, 1 + i * 5, 5, 100 + i * 200, 200, tick, otick);
+	case 1: // fade out
+	{
+		HBRUSH hBrush = CreateSolidBrush(RGB(255 - tick*5, 255 -tick*5, 255-tick*5));
+		HBRUSH old = (HBRUSH)SelectObject(memDC, hBrush);
+
+		Rectangle(memDC, 0, 0, clientRECT.right, clientRECT.bottom);
+		SelectObject(memDC, old);
+		DeleteObject(hBrush);
+
+		if (tick * 5 > 254)
+		{
+			tick = otick = 0;
+			open_storyNum = 2;
+		}
+	}
+		break;
+	case 2:
+	{
+		HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
+		HBRUSH old = (HBRUSH)SelectObject(memDC, hBrush);
+		Rectangle(memDC, 0, 0, clientRECT.right, clientRECT.bottom);
+		SelectObject(memDC, old);
+		DeleteObject(hBrush);
+
+		SetBkColor(memDC, RGB(0, 0, 0));
+		//SetTextColor(memDC, RGB(255, 255, 255));
+
+		//********************************************story**************************************************
+		//for (int i = 0; i<25; i++)
+			//fxText(memDC, "Data\\opening.txt", clientRECT.right / 2, clientRECT.bottom / 2 - 80, 1 + i * 5, 5, 100 + i * 200, 200, tick, otick,1);
+		fxText(memDC, "Data\\opening.txt", clientRECT.right / 2, clientRECT.bottom / 2 - 80, 1, 5, 100, 200, tick, otick, 1);
+
+		//********************************************story**************************************************
+		if (tick > 400)
+		{
+			tick = 0;
+			open_storyNum++;
+		}
+		break;
+	}
+	case 3: // fade in
+	{
+		HBRUSH hBrush = CreateSolidBrush(RGB(tick * 5, tick * 5, tick * 5));
+		HBRUSH old = (HBRUSH)SelectObject(memDC, hBrush);
+
+		Rectangle(memDC, 0, 0, clientRECT.right, clientRECT.bottom);
+		SelectObject(memDC, old);
+		DeleteObject(hBrush);
+
+		if (tick * 5 > 254)
+		{
+			tick = otick = 0;
+			open_storyNum = 4;			// 스토리 추가되면 바로 씬 변경으로
+		}
+		break;
+	}
+
+	case 4: // 랜덤배분
+		player.stat.HP += rand() % 10;
+
+		player.stat.passion =  rand() % 40 - 20;
+		player.stat.endurence =  rand() % 40 - 20;
+		player.stat.intelligent =  rand() % 40 - 20;
+		player.stat.extroverted =  rand() % 40 - 20;
+
+		player.stat.independent =  rand() % 40 - 20;
+		player.stat.naive =  rand() % 40 - 20;
+		player.stat.optimism =  rand() % 40 - 20;
+		player.stat.resistance =  rand() % 40 - 20;
+
 		break;
 	}
 	

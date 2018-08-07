@@ -14,6 +14,8 @@ private:
 	bool stop;
 	bool ending[30];
 	RECT clientRECT;
+	HWND hDesktopwnd = GetDesktopWindow();
+	HDC hDesktopdc = GetWindowDC(hDesktopwnd);
 	//splash
 	CImage Logo;
 	CImage rove;

@@ -87,6 +87,39 @@ void fxText(HDC & memDC, std::string name, int cx, int cy, int Line, int dxLine,
 	}
 }
 
+void fxText(HDC & memDC, std::string name, int cx, int cy, int Line, int dxLine, int startTime, int stdTime, int t, int ot, int flag)
+{
+	if (flag == 1)
+	{
+		if ((t - ot) > startTime)
+		{
+			int c = (t - ot - startTime) * 15;
+			if (c >= 255)
+				c = 255;
+			if ((t - ot - startTime) * 15 > stdTime * 15)
+			{
+				c = 255 - ((t - ot - startTime) * 15 - stdTime * 15);
+				if (c < 0)
+					c = 0;
+			}
+			SetTextColor(memDC, RGB(c, c, c));
+			std::ifstream dataFile(name);
+			std::string Inbuff;
+			int line = 0;
+			for (int i = 1; i < Line; i++)
+				std::getline(dataFile, Inbuff);
+			for (int k = 0; k < dxLine; k++)
+			{
+				std::getline(dataFile, Inbuff);
+				USES_CONVERSION;
+				std::wstring tmp(A2W(Inbuff.c_str()));
+				TextOut(memDC, cx, cy + line * 24, tmp.c_str(), tmp.length());
+				line++;
+			}
+		}
+	}
+}
+
 xText::xText(HDC & memDC, std::string text, int cx, int cy, int startTime, int t, int ot)
 {
 	this->memDC = memDC;
